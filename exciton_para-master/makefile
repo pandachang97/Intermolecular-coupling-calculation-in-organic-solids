@@ -1,0 +1,58 @@
+OBJDIR=./obj
+SRCDIR=./src
+g09SRCFILES=g09_calcInfo.f95 g09_hessian.f95 g09_mocoeff.f95 \
+			g09_overlap.f95 g09_cicoeff.f95 g09_fock.f95 
+g09OBJFILES=${g09SRCFILES:.f95=.o}
+DEP=g09_commonvar.mod
+HRSRCFILE=g09_lambda.f95
+HROBJFILE=g09_lambda.o
+HREXE=g09_lambda.exe
+CTSRCFILE=g09_ctint.f95
+CTOBJFILE=g09_ctint.o
+CTEXE=g09_ctint.exe
+TQSRCFILE=g09_tq.f95
+TQOBJFILE=g09_tq.o
+TQEXE=g09_tq.exe
+CPLSRCFILE=g09_calc_cpl_from_tq.f95
+CPLOBJFILE=g09_calc_cpl_from_tq.o
+CPLEXE=g09_calc_cpl_from_tq.exe
+vpath %.o ${OBJDIR}
+vpath %.mod ${OBJDIR}
+vpath %.f95 ${SRCDIR}
+FLINKER = gfortran
+
+LAPACKROOT = /home/tuj67943/LIB/lapack-3.8.0
+BLASROOT = /home/tuj67943/LIB/BLAS-3.8.0
+
+blas    = $(BLASROOT)/libfblas.a
+lapack  = $(LAPACKROOT)/liblapack.a
+
+all : ${CTEXE} ${HREXE} ${TQEXE} ${CPLEXE}
+
+${TQEXE} : ${TQOBJFILE} ${g09OBJFILES}
+	${FLINKER} $(addprefix ${OBJDIR}/,$(^F)) ${OBJDIR}/${DEP:.mod=.o} \
+		-o $@ -I${OBJDIR}  $(lapack) -lm  $(blas) -lm
+
+${CPLEXE} : ${CPLOBJFILE} ${g09OBJFILES}
+	${FLINKER} $(addprefix ${OBJDIR}/,$(^F)) ${OBJDIR}/${DEP:.mod=.o} \
+		-o $@ -I${OBJDIR}  $(lapack) -lm  $(blas) -lm
+
+${CTEXE} : ${CTOBJFILE} ${g09OBJFILES}
+	${FLINKER} $(addprefix ${OBJDIR}/,$(^F)) ${OBJDIR}/${DEP:.mod=.o} \
+		-o $@ -I${OBJDIR}  $(lapack) -lm  $(blas) -lm
+
+${HREXE} : ${HROBJFILE} ${g09OBJFILES}
+	${FLINKER} $(addprefix ${OBJDIR}/,$(^F)) ${OBJDIR}/${DEP:.mod=.o} \
+		-o $@ -I${OBJDIR}  $(lapack) -lm  $(blas) -lm
+
+%.o : %.f95 ${DEP}
+	${FLINKER} -c ${SRCDIR}/$(<F) -o ${OBJDIR}/$(@F) -I${OBJDIR}
+
+${DEP} : ${DEP:.mod=.f95}
+	mkdir -p ./obj
+	${FLINKER} -c $< -o ${OBJDIR}/${@:.mod=.o} -J${OBJDIR}
+
+clean :
+	@echo cleaning up
+	@rm ${OBJDIR}/*.o ${OBJDIR}/*.mod 2>/dev/null || true
+	@rm *.exe 2>/dev/null || true

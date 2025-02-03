@@ -1,0 +1,20 @@
+ Nonorthogonal Sub Hamiltonian (eV)
+ ,|HOMO1>,|HOMO2>,|LUMO1>,|LUMO2>
+<HOMO1|       -6.6234        0.8618       -0.0154       -0.1443
+<HOMO2|        0.8618       -6.6234        0.1443        0.0154
+<LOMO1|       -0.0154        0.1443       -3.7199        0.7196
+<LOMO2|       -0.1443        0.0154        0.7196       -3.7199
+ Orthogonalized Sub Hamiltonian (eV)
+ ,|HOMO1>,|HOMO2>,|LUMO1>,|LUMO2>
+<HOMO1|       -6.5944        0.4220       -0.0153       -0.0872
+<HOMO2|        0.4220       -6.5944        0.0872        0.0153
+<LOMO1|       -0.0153        0.0872       -3.6859        0.4500
+<LOMO2|       -0.0872        0.0153        0.4500       -3.6859
+ Overlap Sub Matrix
+ ,|HOMO1>,|HOMO2>,|LUMO1>,|LUMO2>
+<HOMO1|        1.0000       -0.0667        0.0000        0.0111
+<HOMO2|       -0.0667        1.0000       -0.0111        0.0000
+<LOMO1|        0.0000       -0.0111        1.0000       -0.0732
+<LOMO2|        0.0111        0.0000       -0.0732        1.0000
+ Notice that th = -<HOMO1|H|HOMO2>. But when 
+ printing out it, the negative sign is ignored.

@@ -1,0 +1,24 @@
+# Example input file
+method          'PBE1PBE/Def2SV'  # method for Gaussian calcultions
+task            EPPDI_dimer        # Name of the Gaussian files to create
+xyz_file_m1     EPPDI_m1.xyz       # file with xyz of molecule 1
+xyz_file_m2     EPPDI_m2.xyz       # file with xyz of molecule 2
+nproc           24                 # number of procs for gaussian
+# log file and fch file names
+fch_m1          EPPDI_dimer_m1.fch
+log_m1          EPPDI_dimer_m1.log
+fch_m2          EPPDI_dimer_m2.fch
+log_m2          EPPDI_dimer_m2.log
+fch_d           EPPDI_dimer_d.fch
+log_d           EPPDI_dimer_d.log
+# translation
+translation     .true.
+trans_direction     y
+step_size       0.4      # step size of translation in A
+Nstep           30       # number of step
+#  rotation
+rotation        .false.
+rot_direction       z
+rot_angle       15       # rotation angle in degree
+# intermolecular SF coupling
+ISF             .true.
